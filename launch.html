@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ships in the Sky</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-950 to-purple-950 min-h-screen flex flex-col items-center">
+
+    <!-- Top banner section - now stretching full width -->
+    <header class="w-full bg-gray-950 text-gray-300 text-center py-4 shadow-lg mb-8">
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-wide">
+            Ships in the Sky
+        </h1>
+    </header>
+
+    <!-- The main content container -->
+    <div class="p-4 flex flex-col items-center justify-center">
+        <!-- New Black Button -->
+        <button id="actionButton" class="bg-gray-900 text-gray-200 py-3 px-6 rounded-lg shadow-xl hover:bg-gray-700 transition-all duration-300 text-lg font-semibold border-2 border-gray-700 hover:border-gray-500 transform hover:scale-105">
+            Launch Your Adventure
+        </button>
+        <div id="messageBox" class="mt-4 p-3 rounded-md hidden text-center text-sm w-64"></div>
+    </div>
+
+    <script>
+        // Check if pywebview API is available
+        if (window.pywebview) {
+            window.addEventListener('pywebviewready', function() {
+                const actionButton = document.getElementById('actionButton');
+                const messageBox = document.getElementById('messageBox');
+
+                actionButton.addEventListener('click', async () => {
+                    messageBox.style.display = 'block';
+                    messageBox.textContent = 'Attempting action...';
+                    try {
+                        // This calls the Python function exposed via pywebview.api
+                        // Replace 'open_local_executable' with the actual function name
+                        // from your Python script that you want to call.
+                        // For example: const success = await pywebview.api.somePythonFunction();
+                        const success = await pywebview.api.open_local_executable(); // Assuming you want to call this
+                        if (success) {
+                            messageBox.textContent = 'Action successful!';
+                            messageBox.style.backgroundColor = '#d4edda';
+                            messageBox.style.color = '#155724';
+                            messageBox.style.borderColor = '#c3e6cb';
+                        } else {
+                            messageBox.textContent = 'Action failed. Check console for errors.';
+                            messageBox.style.backgroundColor = '#f8d7da';
+                            messageBox.style.color = '#721c24';
+                            messageBox.style.borderColor = '#f5c6cb';
+                        }
+                    } catch (error) {
+                        console.error('Error calling Python API:', error);
+                        messageBox.textContent = 'An error occurred. Check console for details.';
+                        messageBox.style.backgroundColor = '#f8d7da';
+                        messageBox.style.color = '#721c24';
+                        messageBox.style.borderColor = '#f5c6cb';
+                    }
+                });
+            });
+        } else {
+            // This block is executed if pywebview.api is not available (e.g., when opened in a regular browser)
+            // The console warning remains for debugging purposes, but no visible message is displayed on the page.
+            console.warn("pywebview.api is not available. This page is not running inside a pywebview instance.");
+        }
+    </script>
+</body>
+</html>
