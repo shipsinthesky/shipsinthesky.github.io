@@ -4,121 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ships in the Sky</title>
-    <!-- Tailwind CSS CDN for easy styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles for the Inter font */
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Ensure the body is a flex container for vertical alignment */
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Make body take at least full viewport height */
-        }
-        /* Style for the message box feedback */
-        .message-box {
-            margin-top: 1rem; /* Tailwind's mt-4 */
-            padding: 0.75rem; /* Tailwind's p-3 */
-            border-radius: 0.375rem; /* Tailwind's rounded-md */
-            text-align: center;
-            font-size: 0.875rem; /* Tailwind's text-sm */
-            width: 16rem; /* Tailwind's w-64 */
-            display: none; /* Hidden by default */
-            transition: opacity 0.3s ease-in-out;
-            opacity: 0;
-        }
-        .message-box.show {
-            opacity: 1;
-        }
-        .message-box.success {
-            background-color: #d4edda; /* bg-green-100 */
-            color: #155724; /* text-green-800 */
-            border: 1px solid #c3e6cb; /* border-green-200 */
-        }
-        .message-box.error {
-            background-color: #f8d7da; /* bg-red-100 */
-            color: #721c24; /* text-red-800 */
-            border: 1px solid #f5c6cb; /* border-red-200 */
-        }
     </style>
 </head>
-<body class="bg-gradient-to-r from-blue-950 to-purple-950 items-center">
+<body class="bg-gradient-to-r from-blue-950 to-purple-950 min-h-screen flex flex-col items-center relative">
 
-    <!-- Top banner section - stretching full width -->
     <header class="w-full bg-gray-950 text-gray-300 text-center py-4 shadow-lg mb-8">
         <h1 class="text-4xl sm:text-5xl font-extrabold tracking-wide">
             Ships in the Sky
         </h1>
     </header>
 
-    <!-- Main content area - This will flex to take available space -->
-    <main class="flex-grow flex items-center justify-center p-4">
-        <!-- Main content area is now empty as requested -->
-    </main>
+    <div class="absolute left-0 top-0 h-full w-32 bg-gray-600 hidden md:block"></div>
 
-    <!-- Button and Message Box Container - fixed at the bottom for demonstration -->
-    <footer class="w-full py-6 flex flex-col items-center justify-center">
-        <!-- The button -->
-        <button id="actionButton" 
-                class="bg-gray-900 text-gray-200 py-3 px-6 
-                       rounded-lg shadow-xl hover:bg-gray-700 
-                       transition-all duration-300 text-lg font-semibold 
-                       border-2 border-gray-700 hover:border-gray-500 
-                       transform hover:scale-105 
-                       focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
-            Launch Your Adventure
-        </button>
-        
-        <!-- Message box for feedback -->
-        <div id="messageBox" class="message-box"></div>
-    </footer>
+    <div class="absolute right-0 top-0 h-full w-32 bg-gray-600 hidden md:block"></div>
 
-    <script>
-        // Listen for the pywebviewready event, which fires when the pywebview API is available.
-        if (window.pywebview) {
-            window.addEventListener('pywebviewready', function() {
-                const actionButton = document.getElementById('actionButton');
-                const messageBox = document.getElementById('messageBox');
+    <div class="p-4 flex-grow">
+        </div>
 
-                actionButton.addEventListener('click', async () => {
-                    // Show message box and indicate loading
-                    messageBox.classList.add('show');
-                    messageBox.textContent = 'Attempting action...';
-                    messageBox.className = 'message-box show'; // Reset classes
+    <footer class="w-full h-24 bg-gray-600 mt-8"></footer>
 
-                    try {
-                        // Call the Python function exposed via pywebview.api.
-                        // The name 'open_local_executable' must exactly match the method in your Python Api class.
-                        const success = await pywebview.api.open_local_executable(); 
-                        if (success) {
-                            messageBox.textContent = 'Local application launched!';
-                            messageBox.classList.add('success');
-                        } else {
-                            messageBox.textContent = 'Failed to launch local app. Check Python console for errors.';
-                            messageBox.classList.add('error');
-                        }
-                    } catch (error) {
-                        console.error('Error calling Python API:', error);
-                        messageBox.textContent = 'An error occurred. Check browser console for details.';
-                        messageBox.classList.add('error');
-                    }
-                });
-            });
-        } else {
-            // This block is executed if the page is opened in a regular browser (not inside pywebview).
-            console.warn("pywebview.api is not available. This page is not running inside a pywebview instance.");
-            // Disable the button if not in pywebview context, as it won't work anyway
-            document.addEventListener('DOMContentLoaded', () => {
-                const actionButton = document.getElementById('actionButton');
-                if (actionButton) {
-                    actionButton.disabled = true;
-                    actionButton.textContent = "Functionality Not Available";
-                    actionButton.classList.add('opacity-50', 'cursor-not-allowed');
-                }
-            });
-        }
-    </script>
 </body>
 </html>
