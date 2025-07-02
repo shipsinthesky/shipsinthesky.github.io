@@ -13,12 +13,12 @@
             font-family: 'Inter', sans-serif;
             /* Space black/blue gradient background */
             background: linear-gradient(to bottom, #000000, #0a0a20, #1a1a40);
-        }
-        /* Ensure the body is a flex container for vertical alignment */
-        body {
+            /* Ensure the body is a flex container for vertical alignment */
             display: flex;
             flex-direction: column;
             min-height: 100vh; /* Make body take at least full viewport height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Hide horizontal scrolling */
         }
         /* Style for the message box feedback */
         .message-box {
@@ -104,7 +104,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center relative overflow-hidden">
+<body class="min-h-screen flex flex-col items-center relative">
     <div class="starfield"></div>
 
     <header class="w-full text-center py-4 shadow-lg mb-8 relative z-10">
