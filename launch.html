@@ -17,6 +17,8 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh; /* Make body take at least full viewport height */
+            margin: 0; /* Remove default body margin */
+            padding: 0; /* Remove default body padding */
         }
         /* Style for the message box feedback */
         .message-box {
@@ -67,12 +69,12 @@
         </h1>
     </header>
 
-    <div class="absolute left-0 top-0 h-full w-32 bg-gray-600 hidden md:block"></div>
-
-    <div class="absolute right-0 top-0 h-full w-32 bg-gray-600 hidden md:block"></div>
-
-    <div class="p-4 flex-grow"></div>
-
-    <footer class="w-full h-24 bg-gray-600 mt-8"></footer>
+    <!-- The content area, now taking up available space without explicit borders -->
+    <!-- Added flexbox to center the image -->
+    <div class="p-4 flex-grow w-full flex justify-center items-center">
+        <!-- Add your main content here -->
+        <!-- Image for home.png, centered on the page with horizontal padding -->
+        <img src="home.png" alt="Home Screen" class="max-w-full h-auto rounded-lg shadow-lg px-4">
+    </div>
 </body>
 </html>
